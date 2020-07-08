@@ -23,4 +23,14 @@ export PORT=9042
 
 
 export SERVERS=`ifconfig | grep "inet addr" | head -1 | awk '{print $2}' | cut -d ":" -f2`
+
+
+export LANG="en_US.UTF-8"
+export JAVA_TOOL_OPTIONS="-Dfile.encoding=UTF8"
+export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+export ANT_OPTS="-Xms4G -Xmx4G"
+export ANT_HOME=$CODE/apache-ant-1.10.0-bin
+export PATH=$PATH:$ANT_HOME/bin
+
+
 set +x
