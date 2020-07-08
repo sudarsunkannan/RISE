@@ -136,7 +136,7 @@ cd $CODE/mapkeeper/ycsb/YCSB
 mvn clean package
 ```
 
-####### Sample Output
+###### Sample Output
 If successfull, you will see messages similar to the below message
 ```
 INFO] ------------------------------------------------------------------------
