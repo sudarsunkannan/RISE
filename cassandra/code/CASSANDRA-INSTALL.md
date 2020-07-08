@@ -6,12 +6,6 @@ cd RISE/cassandra/code
 source scripts/setvars.sh
 ```
 
-###### Set copy required XML files
-
-```
-cp $CODE/xml/*.xml $CODE/cassandra/
-cp $CODE/xml/build.properties.default $CODE/cassandra/
-```
 
 ###### Install system libraries
 ```
@@ -24,10 +18,19 @@ $CODE/scripts/install_libs.sh
 sudo add-apt-repository ppa:openjdk-r/ppa -y
 sudo apt-get update
 sudo apt-get install openjdk-8-jdk -y
-echo "Now Set the default JAVA version to Open JDK 8"
+echo "Now Set the default JAVA version to Open JDK 8 (possibly listed as  /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java)"
 sudo update-alternatives --config java
-java -version
+java -version //Make sure version number is reported as JAVA 8 something similar to the below output
 ```
+
+SAMPLE Output of "java -version"
+```
+Picked up JAVA_TOOL_OPTIONS: -Dfile.encoding=UTF8
+openjdk version "1.8.0_252"
+OpenJDK Runtime Environment (build 1.8.0_252-8u252-b09-1~18.04-b09)
+OpenJDK 64-Bit Server VM (build 25.252-b09, mixed mode)
+```
+
 
 ###### Install CASSANDRA binary
 ```
@@ -57,6 +60,15 @@ git clone https://github.com/apache/cassandra.git
 cd cassandra
 git checkout cassandra-3.11.2 
 sed  -i 's/Xss256k/Xss32m/g' build.xml conf/jvm.options
+
+
+//Cassandra downloads packages during installation.
+//So, let's point Cassandra to right Apache packages.
+
+cp $CODE/xml/*.xml $CODE/cassandra/
+cp $CODE/xml/build.properties.default $CODE/cassandra/
+
+
 ant
 
 
