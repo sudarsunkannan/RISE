@@ -136,7 +136,7 @@ cd $CODE/mapkeeper/ycsb/YCSB
 mvn clean package
 ```
 
-###### Sample Output
+##### Sample Output
 If successfull, you will see messages similar to the below message
 ```
 INFO] ------------------------------------------------------------------------
@@ -203,7 +203,6 @@ ps -e | grep "java"
 
 
 #### Now time to run the actual workload
-
 ```
 cd $YCSBHOME
 sleep 5
@@ -216,7 +215,7 @@ sleep 5
 //First is the Warm up phase. Load the database
 
 $YCSBHOME/bin/ycsb load cassandra2-cql -p hosts=$HOST -p port=$PORT -p recordcount=$OPSCNT -P $YCSBHOME/workloads/workloada -s
-````
+```
 
 ##### Sample Output
 
