@@ -1,5 +1,5 @@
 
-###### Set environmental variable
+#### Set environmental variable
 ```
 git clone https://github.com/SudarsunKannan/RISE
 cd RISE/cassandra/code
@@ -7,12 +7,12 @@ source scripts/setvars.sh
 ```
 
 
-###### Install system libraries
+#### Install system libraries
 ```
 $CODE/scripts/install_libs.sh
 ```
 
-###### Install JAVA 8
+#### Install JAVA 8
 
 ```
 sudo add-apt-repository ppa:openjdk-r/ppa -y
@@ -32,7 +32,7 @@ OpenJDK 64-Bit Server VM (build 25.252-b09, mixed mode)
 ```
 
 
-###### Install CASSANDRA binary
+#### Install CASSANDRA binary
 ```
 cd $CODE	
 mkdir $CODE/cassandra
@@ -41,7 +41,7 @@ sudo apt-get update
 sudo apt-get install -y --force-yes cassandra
 ```
 
-###### Install Compiler for CASSANDRA source
+#### Install Compiler for CASSANDRA source
 ```
 sudo apt-get update
 sudo apt-get install -y git tar g++ make automake autoconf libtool  wget patch libx11-dev libxt-dev pkg-config texinfo locales-all unzip python
@@ -52,7 +52,7 @@ sudo apt-get install ant
 cp $CODE/xml/libraries.properties $CODE/apache-ant-1.10.0/lib/libraries.properties
 ```
 
-###### Now we are going to compile Cassandra from source 
+#### Now we are going to compile Cassandra from source 
 
 ```
 cd $CODE
@@ -70,6 +70,9 @@ cp $CODE/xml/build.properties.default $CODE/cassandra/
 
 ant
 ```
+
+#### SAMPLE OUTPUT
+
 If all goes well in the above step, you will see the following output
 ```
 init:
@@ -100,7 +103,7 @@ Total time: 45 seconds
 
 
 
-###### Now we are going to install Cassandra's compression libraries. Cassandra compresses data when required
+#### Now we are going to install Cassandra's compression libraries. Cassandra compresses data when required
 ```
 cd $CSRC
 rm $CSRC/lib/snappy-java-1.1.1.7.jar
@@ -123,7 +126,7 @@ sudo cp ./build/apache-cassandra-*.jar /usr/share/cassandra/
 cp $CODE/cassandra.sh $CSRC/bin/
 ```
 
-###### Now we are going install a workload generator for Cassandra
+#### Now we are going install a workload generator for Cassandra
 
 ```
 cd $CODE
@@ -133,8 +136,7 @@ cd $CODE/mapkeeper/ycsb/YCSB
 mvn clean package
 ```
 
-SAMPLE OUTPUT
--------------
+###### SAMPLE OUTPUT
 If successfull, you will see messages similar to the below message
 ```
 INFO] ------------------------------------------------------------------------
@@ -156,7 +158,7 @@ INFO] ------------------------------------------------------------------------
 ```
 
 
-###### Now, if all goes well, time to run Cassandra and the benchmark. Lets kill all pending java processes
+#### Now, if all goes well, time to run Cassandra and the benchmark. Lets kill all pending java processes
 ```
 sudo killall java
 sleep 2
@@ -164,7 +166,7 @@ sudo killall java
 sleep 2
 ```
 
-###### Time to launch Cassandra application. Note, it runs as a background server
+#### Time to launch Cassandra application. Note, it runs as a background server
 ```
 cd $CSRC
 //Delete current data folder and let us start from scratch
@@ -178,8 +180,8 @@ sleep 5
 ```
 
 
-SAMPLE OUTPUT
--------------
+#### SAMPLE OUTPUT
+
 If successful, you should see a message similar to this
 ```
 ...
@@ -191,7 +193,7 @@ INFO  [MigrationStage:1] 2020-07-07 22:59:36,402 ColumnFamilyStore.java:411 - In
 ...
 ```
 
-###### Check if a JAVA process is running
+#### Check if a JAVA process is running
 ```
 ps -e | grep "java"
 
@@ -200,7 +202,7 @@ ps -e | grep "java"
 ```
 
 
-###### Now time to run the actual workload
+#### Now time to run the actual workload
 
 ```
 cd $YCSBHOME
@@ -216,8 +218,8 @@ sleep 5
 $YCSBHOME/bin/ycsb load cassandra2-cql -p hosts=$HOST -p port=$PORT -p recordcount=$OPSCNT -P $YCSBHOME/workloads/workloada -s
 ````
 
-SAMPLE OUTPUT
--------------
+#### SAMPLE OUTPUT
+
 If all goes well, your warm-up output will look something like the below info
 ```
 [OVERALL], RunTime(ms), 543.0
@@ -244,13 +246,13 @@ If all goes well, your warm-up output will look something like the below info
 
 ```
 
-###### Check if a JAVA (Cassandra server) process is running
+#### Check if a JAVA (Cassandra server) process is running
 ```
 ps -e | grep "java"
 ```
 
-SAMPLE OUTPUT
--------------
+#### SAMPLE OUTPUT
+
 ```
 ...pts/0    00:00:28 java
 ```
@@ -267,8 +269,7 @@ $CSRC/bin/cassandra
 $YCSBHOME/bin/ycsb run cassandra2-cql -p hosts=$HOST -p port=$PORT -p recordcount=$OPSCNT -P $YCSBHOME/workloads/workloada
 ```
 
-SAMPLE OUTPUT
--------------
+#### SAMPLE OUTPUT
 
 If successful, you will see the following output
 ```
