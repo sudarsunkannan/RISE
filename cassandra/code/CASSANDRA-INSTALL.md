@@ -1,6 +1,7 @@
 
 ###### Set environmental variable
 ```
+git clone https://github.com/SudarsunKannan/RISE
 cd RISE/cassandra/code
 source scripts/setvars.sh
 ```
