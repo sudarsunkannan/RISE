@@ -133,6 +133,8 @@ cd $CODE/mapkeeper/ycsb/YCSB
 mvn clean package
 ```
 
+SAMPLE OUTPUT
+-------------
 If successfull, you will see messages similar to the below message
 ```
 INFO] ------------------------------------------------------------------------
@@ -174,15 +176,19 @@ mkdir -p $CSRC/data/data
 $CSRC/bin/cassandra
 sleep 5
 ```
+
+
+SAMPLE OUTPUT
+-------------
 If successful, you should see a message similar to this
 ```
 ...
-
 INFO  [MigrationStage:1] 2020-07-07 22:59:36,383 ViewManager.java:137 - Not submitting build tasks for views in keyspace system_auth as storage service is not initialized
 INFO  [MigrationStage:1] 2020-07-07 22:59:36,386 ColumnFamilyStore.java:411 - Initializing system_auth.resource_role_permissons_index
 INFO  [MigrationStage:1] 2020-07-07 22:59:36,392 ColumnFamilyStore.java:411 - Initializing system_auth.role_members
 INFO  [MigrationStage:1] 2020-07-07 22:59:36,397 ColumnFamilyStore.java:411 - Initializing system_auth.role_permissions
 INFO  [MigrationStage:1] 2020-07-07 22:59:36,402 ColumnFamilyStore.java:411 - Initializing system_auth.roles
+...
 ```
 
 ###### Check if a JAVA process is running
@@ -210,6 +216,8 @@ sleep 5
 $YCSBHOME/bin/ycsb load cassandra2-cql -p hosts=$HOST -p port=$PORT -p recordcount=$OPSCNT -P $YCSBHOME/workloads/workloada -s
 ````
 
+SAMPLE OUTPUT
+-------------
 If all goes well, your warm-up output will look something like the below info
 ```
 [OVERALL], RunTime(ms), 543.0
@@ -239,8 +247,11 @@ If all goes well, your warm-up output will look something like the below info
 ###### Check if a JAVA (Cassandra server) process is running
 ```
 ps -e | grep "java"
+```
 
-//You will see a java process with some process ID similar to this
+SAMPLE OUTPUT
+-------------
+```
 ...pts/0    00:00:28 java
 ```
 
@@ -256,8 +267,12 @@ $CSRC/bin/cassandra
 $YCSBHOME/bin/ycsb run cassandra2-cql -p hosts=$HOST -p port=$PORT -p recordcount=$OPSCNT -P $YCSBHOME/workloads/workloada
 ```
 
+SAMPLE OUTPUT
+-------------
+
 If successful, you will see the following output
 ```
+
 [OVERALL], RunTime(ms), 8862.0
 [OVERALL], Throughput(ops/sec), 11284.134506883322
 [READ], Operations, 34885.0
