@@ -68,10 +68,40 @@ sed  -i 's/Xss256k/Xss32m/g' build.xml conf/jvm.options
 cp $CODE/xml/*.xml $CODE/cassandra/
 cp $CODE/xml/build.properties.default $CODE/cassandra/
 
-
 ant
+```
+If all goes well in the above step, you will see the following output
+```
+init:
+maven-ant-tasks-localrepo:
+
+maven-ant-tasks-download:
+
+maven-ant-tasks-init:
+
+maven-declare-dependencies:
+
+_write-poms:
+
+jar:
+     [copy] Copying 1 file to /users/kannan11/RISE/cassandra/code/cassandra/build/classes/main/META-INF
+     [copy] Copying 1 file to /users/kannan11/RISE/cassandra/code/cassandra/build/classes/thrift/META-INF
+     [copy] Copying 1 file to /users/kannan11/RISE/cassandra/code/cassandra/build/classes/main/META-INF
+     [copy] Copying 1 file to /users/kannan11/RISE/cassandra/code/cassandra/build/classes/thrift/META-INF
+      [jar] Building jar: /users/kannan11/RISE/cassandra/code/cassandra/build/apache-cassandra-thrift-3.11.2-SNAPSHOT.jar
+      [jar] Building jar: /users/kannan11/RISE/cassandra/code/cassandra/build/apache-cassandra-3.11.2-SNAPSHOT.jar
+    [mkdir] Created dir: /users/kannan11/RISE/cassandra/code/cassandra/build/classes/stress/META-INF
+    [mkdir] Created dir: /users/kannan11/RISE/cassandra/code/cassandra/build/tools/lib
+      [jar] Building jar: /users/kannan11/RISE/cassandra/code/cassandra/build/tools/lib/stress.jar
+
+BUILD SUCCESSFUL
+Total time: 45 seconds
+```
 
 
+
+###### Now we are going to install Cassandra's compression libraries. Cassandra compresses data when required
+```
 cd $CSRC
 rm $CSRC/lib/snappy-java-1.1.1.7.jar
 wget -O lib/snappy-java-1.1.2.6.jar https://repo1.maven.org/maven2/org/xerial/snappy/snappy-java/1.1.2.6/snappy-java-1.1.2.6.jar
