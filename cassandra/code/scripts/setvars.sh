@@ -16,6 +16,7 @@ export CSRC=$CODE/cassandra
 
 export HOST=localhost
 export PORT=9042
+export OPSCNT=100000
 
 #Add other servers in the cluster with comma separation
 #export SERVERS="128.110.153.215,128.104.222.89,130.127.133.93"
