@@ -1,0 +1,10 @@
+[Unit]
+Description=Cassandra Database Service
+After=network-online.target
+Requires=network-online.target
+[Service]
+User=cassandra
+Group=cassandra
+ExecStart=/usr/local/cassandra/bin/cassandra -f
+[Install]
+WantedBy=multi-user.target
