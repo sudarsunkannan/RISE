@@ -1,21 +1,18 @@
 #!/bin/bash
 
-#Initial setup
-mkdir -p $CODE/cassandra/
 cp $CODE/xml/*.xml $CODE/cassandra/
 cp $CODE/xml/build.properties.default $CODE/cassandra/
-
 
 DESTROY() {
         #Make sure we don't have one already running
         sudo killall java
         sudo killall java
-        sleep 10
-	# Check once more
+        sleep 2
+        sudo killall java
+        sleep 2
         sudo killall java
         sleep 2
 }
-
 
 INSTALL_PERF_TOOLS() {
   cd $CODE 
@@ -23,7 +20,6 @@ INSTALL_PERF_TOOLS() {
       git clone https://github.com/brendangregg/perf-tools.git  
   fi
 }
-
 
 FORMAT_SSD() {
     mkdir $SSD
@@ -37,7 +33,6 @@ FORMAT_SSD() {
         sudo mount $SSD_PARTITION $SSD
     fi
 }
-
 
 INSTALL_YCSB() {
     cd $CODE
@@ -73,16 +68,13 @@ INSTALL_CASANDARA_BINARY(){
 
 
 CASANDARA_INSTALL_JAVA(){
-
    sudo add-apt-repository ppa:openjdk-r/ppa -y
    sudo apt-get update
    sudo apt-get install openjdk-8-jdk -y
    echo "Now Set the default JAVA version to Open JDK 7"
    sudo update-alternatives --config java
    java -version
-
 }
-
 
 CASANDARA_SET_ENV() {
 
@@ -94,15 +86,15 @@ CASANDARA_SET_ENV() {
     export PATH=$PATH:$ANT_HOME/bin
 }
 
-
 DOWNLOAD_CASANDARA_SOURCE(){
 
+    #wget http://archive.apache.org/dist/cassandra/3.9/apache-cassandra-3.9-src.tar.gz
+    #tar -xvzf apache-cassandra-3.9-src.tar.gz
     git clone https://github.com/apache/cassandra.git
+
 }
 
-
 INSTALL_ANT() {
-
     cd $CODE
     sudo apt-get update
     sudo apt-get install -y git tar g++ make automake autoconf libtool  wget patch libx11-dev libxt-dev pkg-config texinfo locales-all unzip python
@@ -144,20 +136,21 @@ INSTALL_CASANDARA_SOURCE(){
     INSTALL_CASANDARA_BINARY  
 
 
-    if [ ! -d "apache-ant-1.10.0-bin" ]; then
-        INSTALL_ANT
-    fi	
+   # if [ ! -d "apache-ant-1.10.0-bin" ]; then
+    INSTALL_ANT
+    #fi	
 
     cp $CODE/xml/libraries.properties $CODE/apache-ant-1.10.0/lib/libraries.properties	
 
-    if [ ! -d "cassandra" ]; then
-        DOWNLOAD_CASANDARA_SOURCE
-    fi
+    #if [ ! -d "cassandra" ]; then
+    DOWNLOAD_CASANDARA_SOURCE
+    #fi
 
     cd cassandra
     git checkout cassandra-3.11.2
     sed  -i 's/Xss256k/Xss32m/g' build.xml conf/jvm.options 
 
+    sudo apt-get install ant
     ant
 	
     #Step 2: Replace x86 specific jar files
@@ -184,25 +177,41 @@ INSTALL_CASANDARA_SOURCE(){
 }
 
 
+RUN_CASSANDARA() {
+    #$YCSBHOME/cassandra/start_sevice.sh
+    cd $CSRC
+
+    #Delete data folder
+    mkdir $SHARED_DATA
+    #rm -rf $SHARED_DATA/*
+    rm -rf $CSRC/data/*
+    mkdir -p $CSRC/data/data
+    $CSRC/bin/cassandra
+    #/usr/sbin/cassandra
+    #/usr/sbin/cassandra "--preferred=1"
+    sleep 5
+}
+
+
+
 RUN_YCSB_CASSANDARA() {
 
     INSTALL_CASANDARA_SOURCE
 
-    cd $YCSBHOME/cassandra
-    ./start_sevice.sh 
+    #cd $YCSBHOME/cassandra
+    #./start_sevice.sh 
+    RUN_CASSANDARA
+    sleep 5
 }
 
 INSTALL_JAVA() {
-
     sudo add-apt-repository ppa:webupd8team/java
     sudo apt-get update
     sudo apt-get install -y oracle-java8-set-default
     java -version
 }
 
-
 INSTALL_CMAKE(){
-
     cd $CODE
     wget https://cmake.org/files/v3.7/cmake-3.7.0-rc3.tar.gz
     tar zxvf cmake-3.7.0-rc3.tar.gz
@@ -213,52 +222,57 @@ INSTALL_CMAKE(){
     make install
 }
 
-
 INSTALL_SYSTEM_LIBS(){
+sudo apt-get install -y git
+#git commit --amend --reset-author
 
-	sudo apt-get install -y git
-	#git commit --amend --reset-author
-	sudo apt-get install -y software-properties-common
-	sudo apt-get install -y python3-software-properties
-	sudo apt-get install -y python-software-properties
-	sudo apt-get install -y unzip
-	sudo apt-get install -y python-setuptools python-dev build-essential
-	sudo easy_install pip
-	sudo apt-get install -y numactl
-	sudo apt-get install -y libsqlite3-dev
-	sudo apt-get install -y libnuma-dev
-	sudo apt-get install -y libkrb5-dev
-	sudo apt-get install -y libsasl2-dev
-	sudo apt-get install -y cmake
-	sudo apt-get install -y build-essential
-	sudo apt-get install -y maven
-	sudo apt-get install -y fio
-	sudo apt-get install -y libbfio-dev
-	sudo apt-get install -y libboost-dev
-	sudo apt-get install -y libboost-thread-dev
-	sudo apt-get install -y libboost-system-dev
-	sudo apt-get install -y libboost-program-options-dev
-	sudo apt-get install -y libconfig-dev
-	sudo apt-get install -y uthash-dev
-	sudo apt-get install -y libmpich2-dev
-	sudo apt-get install -y libglib2.0-dev
-	sudo apt-get install -y cscope
-	sudo apt-get install -y msr-tools
-	sudo apt-get install -y msrtool
-	sudo apt-get install -y textinfo
-	sudo apt-get install -y dpkg
-	sudo pip install psutil
-
+sudo apt-get install -y software-properties-common
+sudo apt-get install -y python3-software-properties
+sudo apt-get install -y python-software-properties
+sudo apt-get install -y unzip
+sudo apt-get install -y python-setuptools python-dev build-essential
+sudo easy_install pip
+sudo apt-get install -y numactl
+sudo apt-get install -y libsqlite3-dev
+sudo apt-get install -y libnuma-dev
+sudo apt-get install -y libkrb5-dev
+sudo apt-get install -y libsasl2-dev
+sudo apt-get install -y cmake
+sudo apt-get install -y build-essential
+sudo apt-get install -y maven
+sudo apt-get install -y fio
+sudo apt-get install -y libbfio-dev
+sudo apt-get install -y libboost-dev
+sudo apt-get install -y libboost-thread-dev
+sudo apt-get install -y libboost-system-dev
+sudo apt-get install -y libboost-program-options-dev
+sudo apt-get install -y libconfig-dev
+sudo apt-get install -y uthash-dev
+sudo apt-get install -y libmpich2-dev
+sudo apt-get install -y libglib2.0-dev
+sudo apt-get install -y cscope
+sudo apt-get install -y msr-tools
+sudo apt-get install -y msrtool
+sudo apt-get install -y textinfo
+sudo apt-get install -y dpkg
+sudo pip install psutil
 }
 
-
-
 DESTROY
+
 mkdir $CODE
 cd $CODE
 #fuser -k $PORT/tcp
-INSTALL_SYSTEM_LIBS
-CASANDARA_INSTALL_JAVA
+#INSTALL_SYSTEM_LIBS
+#CASANDARA_INSTALL_JAVA
 INSTALL_CASANDARA_SOURCE
 INSTALL_YCSB
 DESTROY
+
+#INSTALL_PERF_TOOLS
+
+#FORMAT_SSD
+#Install ycsb and casandara
+#RUN_YCSB_CASSANDARA
+#INSTALL_YCSB
+

@@ -1,6 +1,8 @@
 #/users/skannan/ssd/schedsp/simplebench/create_$1".sh"
 #dd if=/dev/zero bs=4096 count=12582912 of=/mnt/$2/test
 #time ./testread /mnt/$2/test 4096
+set -x
+
 rm -rf file1*
 
 FILEPREFIX="file1"
