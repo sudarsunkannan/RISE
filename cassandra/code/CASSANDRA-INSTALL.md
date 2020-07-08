@@ -71,7 +71,7 @@ cp $CODE/xml/build.properties.default $CODE/cassandra/
 ant
 ```
 
-#### SAMPLE OUTPUT
+##### Sample Output
 
 If all goes well in the above step, you will see the following output
 ```
@@ -136,7 +136,7 @@ cd $CODE/mapkeeper/ycsb/YCSB
 mvn clean package
 ```
 
-###### SAMPLE OUTPUT
+####### Sample Output
 If successfull, you will see messages similar to the below message
 ```
 INFO] ------------------------------------------------------------------------
@@ -180,7 +180,7 @@ sleep 5
 ```
 
 
-#### SAMPLE OUTPUT
+##### Sample Output
 
 If successful, you should see a message similar to this
 ```
@@ -218,7 +218,7 @@ sleep 5
 $YCSBHOME/bin/ycsb load cassandra2-cql -p hosts=$HOST -p port=$PORT -p recordcount=$OPSCNT -P $YCSBHOME/workloads/workloada -s
 ````
 
-#### SAMPLE OUTPUT
+##### Sample Output
 
 If all goes well, your warm-up output will look something like the below info
 ```
@@ -251,7 +251,7 @@ If all goes well, your warm-up output will look something like the below info
 ps -e | grep "java"
 ```
 
-#### SAMPLE OUTPUT
+##### Sample Output
 
 ```
 ...pts/0    00:00:28 java
@@ -269,7 +269,7 @@ $CSRC/bin/cassandra
 $YCSBHOME/bin/ycsb run cassandra2-cql -p hosts=$HOST -p port=$PORT -p recordcount=$OPSCNT -P $YCSBHOME/workloads/workloada
 ```
 
-#### SAMPLE OUTPUT
+##### Sample Output
 
 If successful, you will see the following output
 ```
