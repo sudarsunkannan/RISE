@@ -30,22 +30,6 @@ DESTROY() {
 }
 
 
-RUN_CASSANDARA() {
-    #$YCSBHOME/cassandra/start_sevice.sh
-    cd $CSRC
-
-    #Delete data folder
-    mkdir $SHARED_DATA
-    #rm -rf $SHARED_DATA/*
-    rm -rf $CSRC/data/*
-    mkdir -p $CSRC/data/data
-    $CSRC/bin/cassandra
-    #/usr/sbin/cassandra 	
-    #/usr/sbin/cassandra "--preferred=1"
-    sleep 5
-}
-
-
 RUN_YCSB() {
 
 	cd $YCSBHOME
@@ -74,11 +58,6 @@ RUN_YCSB() {
 
 mkdir $CODE
 cd $CODE
-DESTROY
-kill -9 `pidof java`
-#Install ycsb and casandara
-sleep 5
-RUN_CASSANDARA
 sleep 20
 RUN_YCSB
 DESTROY

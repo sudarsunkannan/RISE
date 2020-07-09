@@ -14,7 +14,8 @@ export USER=$USER
 export DATASRC=""
 export CSRC=$CODE/cassandra
 
-export HOST=localhost
+#export HOST=localhost
+export HOST=155.98.36.107
 export PORT=9042
 export OPSCNT=100000
 
