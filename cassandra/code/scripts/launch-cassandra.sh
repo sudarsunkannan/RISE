@@ -36,11 +36,9 @@ RUN_CASSANDARA() {
 
     #Delete data folder
     mkdir $SHARED_DATA
-    #rm -rf $SHARED_DATA/*
-    rm -rf $CSRC/data/*
+    #rm -rf $CSRC/data/*
     mkdir -p $CSRC/data/data
     $CSRC/bin/cassandra
-    #/usr/sbin/cassandra 	
     #/usr/sbin/cassandra "--preferred=1"
     sleep 5
 }

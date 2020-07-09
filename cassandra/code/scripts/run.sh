@@ -60,6 +60,6 @@ mkdir $CODE
 cd $CODE
 sleep 20
 RUN_YCSB
-DESTROY
+#DESTROY
 
 
