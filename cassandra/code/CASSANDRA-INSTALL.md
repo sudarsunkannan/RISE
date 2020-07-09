@@ -311,6 +311,95 @@ If successful, you will see the following output
 ```
 
 
+#### Running in Multiple node
+
+1. Enable a ssh connection across nodes by adding every node's SSH key to every other node.
+
+First, execute this in add the nodes
+```
+ssh-keygen
+```
+
+2. Add the keys to ~/.ssh/authorized_keys 
+```
+cat ~/.ssh/id_rsa.pub
+```
+
+Add the generated key to ~/.ssh/authorized_keys
+
+3. Now, try to do the SSH between each node and make sure they can ssh.
+
+4. Change the HOST information on each of the file
+
+```
+vim $CODE/scripts/setvars.sh
+//Change the HOST variable 
+export HOST=155.98.36.107 //IP address of the node
+```
+
+5. Set the environmental variables again
+
+```
+source $CODE/scripts/setvars.sh
+
+```
+
+6. Now, time to change host information
+
+Open $CODE/cassandra/conf/cassandra.yaml file.
+
+First change the listen_address and RPC address
+```
+listen_address: 155.98.36.111 //IP address of your machine
+rpc_address: 155.98.36.111
+```
+
+Next, the seed info with all the nodes in the Cluster
+```
+- seeds: "155.98.36.111,155.98.36.107" //this should include all the nodes
+```
+
+
+7. Now time to run cassandra in each node
+
+```
+scripts/launch-cassandra.sh //must be done in all nodes
+```
+
+8. Check how my nodes are current running
+```
+$CODE/cassandra/bin/nodetool status
+```
+
+You will see some status like this
+
+```
+Picked up JAVA_TOOL_OPTIONS: -Dfile.encoding=UTF8
+Datacenter: datacenter1
+=======================
+Status=Up/Down
+|/ State=Normal/Leaving/Joining/Moving
+--  Address        Load       Tokens       Owns (effective)  Host ID                               Rack
+UN  155.98.36.107  103.69 KiB  256          100.0%            6125f211-6632-4b2a-8f71-10fda00a11c4  rack1
+UN  155.98.36.111  118.07 KiB  256          100.0%            bd40b4d8-9802-4bdd-b532-d99e3625865d  rack1
+```
+
+9. Now time to run the benchmark
+```
+scripts/run.sh
+```
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
